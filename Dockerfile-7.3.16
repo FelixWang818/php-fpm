@@ -76,41 +76,41 @@ RUN docker-php-ext-install -j$(nproc) bcmath calendar exif gettext sockets dba m
     docker-php-ext-install -j$(nproc) intl && \
     # ⬇ mcrypt 扩展的安装
     apt-get install -y --no-install-recommends libmcrypt-dev && \
-    pecl install mcrypt-1.0.2 && docker-php-ext-enable mcrypt && \
+    pecl install mcrypt-1.0.3 && docker-php-ext-enable mcrypt && \
     # ⬇ imagick 扩展的安装
     apt-get install -y --no-install-recommends libmagickwand-dev && \
-    pecl install imagick-3.4.3 && docker-php-ext-enable imagick && \
+    pecl install imagick-3.4.4 && docker-php-ext-enable imagick && \
     # ⬇ memcached
-    pecl install memcached-3.1.3 && docker-php-ext-enable memcached && \
+    pecl install memcached-3.1.5 && docker-php-ext-enable memcached && \
     # ⬇ opcache 扩展的安装
     docker-php-ext-configure opcache --enable-opcache && docker-php-ext-install opcache && \
     # ⬇ Redis
-    pecl install redis-5.0.2 && docker-php-ext-enable redis && \
+    pecl install redis-5.2.1 && docker-php-ext-enable redis && \
     # ⬇ Swoole
-    pecl install swoole-4.4.3 && docker-php-ext-enable swoole && \
-    # rrd
+    pecl install swoole-4.4.16 && docker-php-ext-enable swoole && \
+    # ⬇ rrd
     apt-get install -y --no-install-recommends librrd-dev && \
     pecl install rrd-2.0.1 && docker-php-ext-enable rrd && \
-	# odbc, pdo_odbc 扩展 -20200323
-	RUN set -ex; \
-	docker-php-source extract; \
-	{ \
-		 echo '# https://github.com/docker-library/php/issues/103#issuecomment-271413933'; \
-		 echo 'AC_DEFUN([PHP_ALWAYS_SHARED],[])dnl'; \
-		 echo; \
-		 cat /usr/src/php/ext/odbc/config.m4; \
-	} > temp.m4; \
-	mv temp.m4 /usr/src/php/ext/odbc/config.m4; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends unixodbc-dev; \
-	rm -rf /var/lib/apt/lists/*; \
-	docker-php-ext-configure odbc --with-unixODBC=shared,/usr; \
-	docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr; \
-	docker-php-ext-install odbc pdo_odbc; \
-	docker-php-source delete && \
-	# sqlsrv pdo_sqlsrv 扩展 -20200323
-	pecl install sqlsrv-5.8.0 && docker-php-ext-enable sqlsrv && \
-	pecl install pdo_sqlsrv-5.8.0 && docker-php-ext-enable pdo_sqlsrv && \
+    # odbc, pdo_odbc 扩展 -20200323
+    RUN set -ex; \
+    docker-php-source extract; \
+    { \
+         echo '# https://github.com/docker-library/php/issues/103#issuecomment-271413933'; \
+         echo 'AC_DEFUN([PHP_ALWAYS_SHARED],[])dnl'; \
+         echo; \
+         cat /usr/src/php/ext/odbc/config.m4; \
+    } > temp.m4; \
+    mv temp.m4 /usr/src/php/ext/odbc/config.m4; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends unixodbc-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    docker-php-ext-configure odbc --with-unixODBC=shared,/usr; \
+    docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr; \
+    docker-php-ext-install odbc pdo_odbc; \
+    docker-php-source delete && \
+    # sqlsrv pdo_sqlsrv 扩展 -20200323
+    pecl install sqlsrv-5.8.0 && docker-php-ext-enable sqlsrv && \
+    pecl install pdo_sqlsrv-5.8.0 && docker-php-ext-enable pdo_sqlsrv && \
     # ⬇ 清理
     rm -rf /var/lib/apt/lists/*  && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \

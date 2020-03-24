@@ -1,7 +1,9 @@
-# php-fpm 扩展安装
+# php-fpm 扩展安装说明 
+本说明扩展针对PHP7版本，若使用PHP5版本请更改部分扩展的版本
+pecl查询网址：http://pecl.php.net/
 
+# 常用扩展的安装
 docker-php-ext-install -j$(nproc) bcmath calendar exif gettext sockets dba mysqli pcntl pdo_mysql shmop sysvmsg sysvsem sysvshm
-
 
 # bz2 扩展的安装, 读写 bzip2（.bz2）压缩文件
 apt-get install -y --no-install-recommends libbz2-dev && \
@@ -90,27 +92,35 @@ docker-php-ext-install -j$(nproc) intl
 # mcrypt 扩展的安装
 apt-get install -y --no-install-recommends libmcrypt-dev && \
 rm -r /var/lib/apt/lists/* && \
-pecl install mcrypt-1.0.2 && \
+pecl install mcrypt-1.0.3 && \
 docker-php-ext-enable mcrypt
 
 # imagick 扩展的安装
 $ export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" && \
 apt-get install -y --no-install-recommends libmagickwand-dev && \
 rm -rf /var/lib/apt/lists/* && \
-pecl install imagick-3.4.3 && \
+pecl install imagick-3.4.4 && \
 docker-php-ext-enable imagick
 
 # memcached 扩展的安装
 apt-get install -y --no-install-recommends zlib1g-dev libmemcached-dev && \
 rm -r /var/lib/apt/lists/* && \
-pecl install memcached && \
+pecl install memcached-3.1.5 && \
 docker-php-ext-enable memcached
 
 # redis 扩展的安装
-$ pecl install redis-4.0.1 && docker-php-ext-enable redis
+pecl install redis-5.2.1 && docker-php-ext-enable redis
 
-opcache 扩展的安装
-$ docker-php-ext-configure opcache --enable-opcache && docker-php-ext-install opcache
+# rrd 扩展的安装
+apt-get install -y --no-install-recommends librrd-dev && \
+pecl install rrd-2.0.1 && docker-php-ext-enable rrd && \
+
+# opcache 扩展的安装
+docker-php-ext-configure opcache --enable-opcache && docker-php-ext-install opcache
+
+# ⬇ Swoole 扩展的安装 
+pecl install swoole-4.4.16 && docker-php-ext-enable swoole
+
 
 # odbc pdo_odbc扩展的安装
 
