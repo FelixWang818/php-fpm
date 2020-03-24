@@ -121,9 +121,7 @@ docker-php-ext-configure opcache --enable-opcache && docker-php-ext-install opca
 # ⬇ Swoole 扩展的安装 
 pecl install swoole-4.4.16 && docker-php-ext-enable swoole
 
-
 # odbc pdo_odbc扩展的安装
-
 RUN set -ex; \
 docker-php-source extract; \
 { \
