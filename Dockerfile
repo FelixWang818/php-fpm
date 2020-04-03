@@ -21,7 +21,7 @@ RUN \
     mv /home/resource/sources.list /etc/apt/sources.list; \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ ; \
     # ⬇ 更新、安装基础组件
-    apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends libmcrypt-dev libmemcached-dev
+    apt-get update && apt-get install -y --allow-remove-essential --no-install-recommends cron libmcrypt-dev libmemcached-dev
 
     # ⬇ 安装 PHP 7.3.9相关扩展
 RUN docker-php-ext-install -j$(nproc) bcmath calendar exif gettext sockets dba mysqli pcntl pdo_mysql shmop sysvmsg sysvsem sysvshm && \
